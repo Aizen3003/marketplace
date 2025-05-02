@@ -1,0 +1,31 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ product.title }}</title>
+    <link rel="stylesheet" href="{% static 'styles_item.css' %}">
+</head>
+<body>
+    <div class="product-page-container">
+        <div class="product-details-section">
+            <h1>{{ towarcik.naswan }}</h1>
+            <p class="product-price">${{ towarcik.zena }}</p>
+            <p><strong>Производитель:</strong> {{ towarcik.proiswoditel }}</p>
+            <p><strong>Количество:</strong> {{ towarcik.nalichie }}</p>
+            <p><strong>Дата производства:</strong> {{ towarcik.data_prois }}</p>
+            <p class="product-description">{{ towarcik.opisanie }}</p>
+            <form method="post" action="/dobawtowar/">
+                {% csrf_token %}
+                <input type="hidden" value="{{towarcik.id}}" name="idtowara">
+                <button class="add-to-cart">Add to Cart</button>
+            </form>
+            <a href="{% url 'towar_list' %}" class="back-to-list">Back to Items List</a>
+        </div>
+        <div class="product-image-section">
+            <img src="{{ towarcik.image.url }}" alt="{{ towarcik.title }}">
+        </div>
+    </div>
+</body>
+</html>

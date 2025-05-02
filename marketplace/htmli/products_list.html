@@ -1,0 +1,29 @@
+<div class="container">
+    <h2>Наши товары</h2>
+    <div class="product-grid">
+        {%for i in spisak%}
+            <div class="product-card">
+                <a href="/towar/{{i.id}}/"><img src="{{i.image.url}}" alt="Product 1"></a>
+                <h3><a href="/towar/{{i.id}}/">{{i.naswan}}</a></h3>
+                <p class="price">{{i.zena}}</p>
+                {%if user.is_authenticated %}
+                    {%if i in user.korsinka.towari.all%}
+                        <a href="/cart/">Товар добавлен, перейдите в корзину</a></h3>
+                    {%else%}
+                        <form method="post" action="/dobawtowar/">
+                            {% csrf_token %}
+                            <input type="hidden" value="{{i.id}}" name="idtowara">
+                            {%if i.nalichie > 0%}
+                            <button>Добавить в корзину {%if i.nalichie < 6 %}({{i.nalichie}}){%endif%}</button>
+                            {%else%}
+                            Товар кончился
+                            {%endif%}
+                        </form>
+                    {%endif%}
+                {%else%}
+                    <a href="/accounts/login/">Залогиньтесь</a></h3>
+                {%endif%}
+            </div>
+        {%endfor%}
+    </div>
+</div>

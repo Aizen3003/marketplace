@@ -1,0 +1,25 @@
+{%if towari_polso%}
+    {%for i in towari_polso%}
+        <h1>{{i.towar.naswan}}, {{i.kolich}}</h1>
+        {%if i.towar.nalichie > 0%}
+        <form method="post" action="/plus/">
+            {% csrf_token %}
+            <input type="hidden" value="{{i.towar.id}}" name="idtowara">
+            <button type="submit">+</button>
+        </form>
+        {%endif%}
+        <form method="post" action="/minus/">
+            {% csrf_token %}
+            <input type="hidden" value="{{i.towar.id}}" name="idtowara">
+            <button type="submit">-</button>
+        </form>
+        <form method="post" action="/delete/">
+            {% csrf_token %}
+            <input type="hidden" value="{{i.towar.id}}" name="idtowara">
+            <button type="submit">Удалить</button>
+        </form>
+    {%endfor%}
+{%else%}
+    <h1>Корзина пустая</h1>
+{%endif%}
+<h3><a href="/towarlist/">Идите выбирать свою мебель</a></h3>
